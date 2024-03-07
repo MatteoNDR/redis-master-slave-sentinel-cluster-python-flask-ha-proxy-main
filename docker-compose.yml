@@ -1,0 +1,100 @@
+version: '3.9'
+
+services:
+  master:
+    image: redis:latest
+    container_name: redis-master
+    command: "redis-server /etc/redis.conf"
+    volumes:
+      - "./data/master:/data/"
+      - "./master.conf:/etc/redis.conf"
+
+  slave:
+    image: redis:latest
+    container_name: redis-slave
+    command: redis-server /etc/redis.conf 
+    depends_on:
+      - master
+    volumes:
+      - "./data/slave:/data/"
+      - "./slave.conf:/etc/redis.conf"
+
+
+  slave-2:
+    image: redis:latest
+    container_name: redis-slave-2
+    command: redis-server /etc/redis.conf 
+    depends_on:
+      - master
+      - slave
+    volumes:
+      - "./data/slave2:/data/"
+      - "./slave.conf:/etc/redis.conf"
+
+  sentinel:
+    build: ./sentinel
+    container_name: redis-sentinel
+    environment:
+      - SENTINEL_DOWN_AFTER=5000
+      - SENTINEL_FAILOVER=5000
+    depends_on:
+      - master
+      - slave
+      - slave-2
+
+  sentinel-2:
+    build: ./sentinel
+    container_name: redis-sentinel-2
+    environment:
+      - SENTINEL_DOWN_AFTER=5000
+      - SENTINEL_FAILOVER=5000
+    depends_on:
+      - master
+      - slave
+      - slave-2
+
+  sentinel-3:
+    build: ./sentinel
+    container_name: redis-sentinel-3
+    environment:
+      - SENTINEL_DOWN_AFTER=5000
+      - SENTINEL_FAILOVER=5000
+    depends_on:
+      - master
+      - slave
+      - slave-2
+
+  redis-insight:
+    container_name: "redis-insight"
+    image: "oblakstudio/redisinsight:latest"
+    ports:
+      - "5540:5540"
+    depends_on:
+      - master
+      - slave
+      - slave-2
+
+  flask-app:
+    container_name: "flask-app"
+    image: pythonredis
+    ports:
+      - "5000:5000"
+    volumes:
+      - "./flask-app:/flask-app"
+
+  flask-app-2:
+    container_name: "flask-app-2"
+    image: pythonredis
+    ports:
+      - "5001:5000"
+    volumes:
+      - "./flask-app:/flask-app"
+
+  proxy:
+    container_name: "proxy"
+    image: haproxy:latest
+    volumes:
+      - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+    ports:
+      - '8404:8404'
+      - '80:80'

@@ -1,0 +1,7 @@
+Flask==2.3.3
+redis
+requests
+jsonify
+Flask-Session==0.5.0
+Werkzeug==2.3.8
+Jinja2

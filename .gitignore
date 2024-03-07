@@ -1,0 +1,8 @@
+# Redis dump file
+dump.rdb
+
+appendonlydir/
+
+**/appendonlydir/
+
+flask-app/__pycache__/
