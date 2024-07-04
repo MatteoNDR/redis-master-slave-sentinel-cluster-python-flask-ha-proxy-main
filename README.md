@@ -3,11 +3,6 @@
 
 # Pagina Confluence 
 
-https://confluence.passepartout.sm/display/DOCUMENTAZIONE/Redis
-
-# Diagramma applicazione
-
-![Redis POC](https://gitlab.passepartout.local/matteo.andruccioli/redis-master-slave-sentinel-cluster-python-flask-ha-proxy/-/raw/main/Redis-Poc.jpg)
 
 # Descrizione Diagramma - Applicazione
 
