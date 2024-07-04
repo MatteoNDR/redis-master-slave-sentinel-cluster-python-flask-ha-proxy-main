@@ -1,8 +1,6 @@
 # Redis-Master-Slave-Sentinel-Cluster Failover con Docker, Python , Flask e HaProxy
 
 
-# Pagina Confluence 
-
 
 # Descrizione Diagramma - Applicazione
 
