@@ -91,7 +91,7 @@ Prove effettuabili per ogni container:
 
 HaProxy -> http://localhost:8404/stats
 
-FlaskApp -> http://localhost/register , http://localhost/login , http://localhost/add , http://localhost/delete 
+FlaskApp -> http://localhost:{PortaContainerFlask}/register , http://localhost:{PortaContainerFlask}/login , http://localhost:{PortaContainerFlask}/add , http://localhost:{PortaContainerFlask}/delete 
 
 Redis-Insight-> http://localhost:5540
 
